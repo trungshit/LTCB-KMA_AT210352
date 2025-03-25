@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int a[10];
+    float n,s=0,s1=0,k1=0,k2=0,s2=0;
+    scanf("%f",&n);
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+        s+=a[i];
+        if(a[i]<0)
+            {
+                s1+=a[i];
+            k1++;
+            }
+        else
+            {
+                s2+=a[i];
+             k2++;
+            }
+    }
+    printf("%f",s/n);
+    printf("%f\n",s1/k1);
+    printf("%f\n",s2/k2);
+    return 0;
+}
