@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int a[10],x,k,max,min;
+    float n,s=0,s1=0,k1=0,k2=0,s2=0;
+    scanf("%f",&n);
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d",&a[i]);
+    }
+    max=a[0];
+    min=a[0];
+    for(int i=0;i<n;i++)
+    {
+        if(a[i]>max)
+        {
+            max=a[i];
+            k=i;
+        }
+        if(a[i]<min)
+        {
+            min=a[i];
+            x=i;
+        }
+    }
+    printf("%d %d\n",max,k);
+    printf("%d %d",min,x);
+
+    return 0;
+}
