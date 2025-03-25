@@ -1,0 +1,134 @@
+#include <stdio.h>
+#include <math.h>
+
+// Bài 1: Hàm tính x^y
+double power(double x, int y) {
+    return pow(x, y);
+}
+
+// Bài 2: Hàm đệ quy tính giai thừa n!
+long long factorial(int n) {
+    if (n == 0) return 1;
+    return n * factorial(n - 1);
+}
+
+// Bài 3: Hàm đệ quy tính số Fibonacci thứ n
+long long fibonacci(int n) {
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+// Bài 4: Hàm nhập ma trận
+void inputMatrix(int a[][10], int n, int m) {
+    printf("Nhap ma tran %dx%d:\n", n, m);
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            scanf("%d", &a[i][j]);
+}
+
+// Hàm in ma trận
+void printMatrix(int a[][10], int n, int m) {
+    printf("Ma tran:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++)
+            printf("%4d", a[i][j]);
+        printf("\n");
+    }
+}
+
+// Hàm cộng hai ma trận
+void addMatrix(int a[][10], int b[][10], int result[][10], int n, int m) {
+    for (int i = 0; i < n; i++)
+        for (int j = 0; j < m; j++)
+            result[i][j] = a[i][j] + b[i][j];
+}
+
+// Bài 5: Chuyển số nguyên sang hệ cơ số bất kỳ (2, 8, 16)
+void convertBase(int num, int base) {
+    char result[32];
+    int index = 0;
+    while (num > 0) {
+        int rem = num % base;
+        result[index++] = (rem < 10) ? rem + '0' : rem - 10 + 'A';
+        num /= base;
+    }
+    printf("He co so %d: ", base);
+    for (int i = index - 1; i >= 0; i--)
+        printf("%c", result[i]);
+    printf("\n");
+}
+
+// Bài 6: Đa thức P + Q
+void polynomialSum(int p[], int q[], int result[], int deg) {
+    for (int i = 0; i <= deg; i++)
+        result[i] = p[i] + q[i];
+}
+
+// Hàm nhập đa thức
+void inputPolynomial(int p[], int deg) {
+    printf("Nhap %d he so da thuc: ", deg + 1);
+    for (int i = 0; i <= deg; i++)
+        scanf("%d", &p[i]);
+}
+
+// Hàm in đa thức
+void printPolynomial(int p[], int deg) {
+    for (int i = deg; i >= 0; i--) {
+        printf("%d", p[i]);
+        if (i > 0) printf("x^%d + ", i);
+    }
+    printf("\n");
+}
+
+int main() {
+    // Bài 1
+    double x;
+    int y;
+    printf("Nhap x va y (x^y): ");
+    scanf("%lf %d", &x, &y);
+    printf("x^y = %.2lf\n", power(x, y));
+
+    // Bài 2
+    int n;
+    printf("Nhap n!: ");
+    scanf("%d", &n);
+    printf("%d! = %lld\n", n, factorial(n));
+
+    // Bài 3
+    printf("Nhap n Fibonacci: ");
+    scanf("%d", &n);
+    printf("Fibonacci(%d) = %lld\n", n, fibonacci(n));
+
+    // Bài 4: Ma trận
+    int a[10][10], b[10][10], result[10][10], rows, cols;
+    printf("Nhap so hang va cot: ");
+    scanf("%d %d", &rows, &cols);
+    inputMatrix(a, rows, cols);
+    inputMatrix(b, rows, cols);
+    addMatrix(a, b, result, rows, cols);
+    printMatrix(result, rows, cols);
+
+    // Bài 5
+    int num;
+    printf("Nhap so nguyen can chuyen doi: ");
+    scanf("%d", &num);
+    convertBase(num, 2);
+    convertBase(num, 8);
+    convertBase(num, 16);
+
+    // Bài 6
+    int deg;
+    printf("Nhap bac da thuc: ");
+    scanf("%d", &deg);
+    int p[deg + 1], q[deg + 1], resultPoly[deg + 1];
+
+    inputPolynomial(p, deg);
+    inputPolynomial(q, deg);
+    polynomialSum(p, q, resultPoly, deg);
+
+    printf("Tong hai da thuc: ");
+    printPolynomial(resultPoly, deg);
+
+    return 0;
+}
