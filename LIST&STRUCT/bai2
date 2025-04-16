@@ -1,0 +1,181 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct Node
+{
+    int tuoi;
+    char ho_ten[20];
+    float diemTB;
+    struct Node*next;
+} Node;
+typedef struct
+{
+    Node *first;
+    Node* last;
+} Linkedlist;
+Linkedlist *create_list()
+{
+    Linkedlist *list=(Linkedlist*)malloc(sizeof(Linkedlist));
+    list->first=NULL;
+    list->last=NULL;
+    return list;
+}
+Node *create_new_node()
+{
+    Node *node=(Node*)malloc(sizeof(Node));
+    printf("nhap ten hoc sinh:");
+    fflush(stdin);
+    gets(node->ho_ten);
+    printf("nhap tuoi:");
+    scanf("%d",&node->tuoi);
+    printf("nhap diem TB:");
+    scanf("%f",&node->diemTB);
+    node->next=NULL;
+    return node;
+}
+void add_node(Linkedlist *list)
+{
+    Node *node;
+    if(list->first==NULL)
+    {
+        list->first=node;
+        list->last=node;
+    }
+    else
+    {
+        list->last->next=node;
+        list->last=node;
+    }
+}
+void add_sv(Linkedlist *list,Node*new_node,char found_name[20])
+{
+    Node *node=list->first;
+    Node *prev=NULL;
+               while(node!=NULL)
+    {
+        if(strcmp(node->ho_ten,found_name)==0)
+        {
+            if(prev==NULL)
+            {
+                new_node->next=list->first;
+                list->first=new_node;
+            }
+            else
+            {
+                prev->next=new_node;
+                new_node->next=node;
+            }
+            return;
+        }
+        prev=node;
+        node=node->next;
+    }
+    printf("KHONG THAY HOC SINH CO TEN TREN!");
+    return;
+}
+void delete_node(Linkedlist *list,char found_name[20])
+{
+    Node *prev=NULL;
+    Node *node=list->first;
+    while(node!=NULL)
+    {
+        if(strcmp(node->ho_ten,found_name)==0)
+        {
+            if(prev==NULL)
+            {
+                list->first=node->next;
+                if(list->last==node)
+                {
+                    list->last=NULL;
+                }
+                else
+                {
+                    prev->next=node->next;
+                    if(list->last==node)
+                    {
+                        list->last=prev;
+                    }
+                }
+            }
+            return;
+        }
+        prev=node;
+        node=node->next;
+    }
+    printf("khong thay ten hoc sinh can xoa");
+}
+void print_list(Linkedlist *list)
+{
+    int stt=1;
+    printf("DANH SACH HOC SINH\n");
+    printf("%-5s %-20s %-20s %-10s\n","STT","HO VA TEN","TUOI","DIEM TB");
+    Node *node=list->first;
+    while(node!=NULL)
+    {
+        printf("%-5d %-20s %-20d %-10.2f\n",stt++,node->ho_ten,node->tuoi,node->diemTB);
+        node=node->next;
+    }
+}
+void menu()
+{
+    printf("\tMENU\n");
+    printf("=================================\n");
+    printf("1.them hoc sinh vao danh sach\n");
+    printf("2.chen hoc sinh moi vao truoc\n");
+    printf("3.xoa hoc sinh theo ten can tim\n");
+    printf("4.thoat\n");
+    printf("=================================\n");
+    printf("CHON: ");
+}
+int main()
+{
+    int x=0;
+    Linkedlist *list=create_list();
+    while(!x)
+    {
+        menu();
+        int thaotac;
+        scanf("%d",&thaotac);
+        getchar();
+        switch(thaotac)
+        {
+        case 1:
+            {
+                int n;
+            printf("nhap so hoc sinh:");
+            scanf("%d",&n);
+            getchar();
+            while(n--)
+            {
+                Node *node=create_new_node();
+                add_node(list);
+            }
+            print_list(list);
+            break;
+            }
+        case 2:
+           {
+            char found_name[20];
+            gets(found_name);
+            Node *node=create_new_node();
+            add_sv(list,node,found_name);
+            print_list(list);
+            break;
+           }
+        case 3:
+            {
+                char found_name[20];
+            delete_node(list,found_name);
+            print_list(list);
+            break;
+            }
+        case 4:
+            x=1;
+            break;
+
+        default:
+            printf("khong hop le\n");
+            break;
+    }
+}
+ return 0;
+}
