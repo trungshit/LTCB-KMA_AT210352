@@ -1,0 +1,105 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct Node
+{
+    char tenhang[20];
+    int don_gia;
+    int so_luong;
+    struct Node *next;
+}Node;
+typedef struct
+{
+    Node *first;
+    Node *last;
+}Linkedlist;
+Linkedlist *createlist()
+{
+   Linkedlist *list=(Linkedlist*)malloc(sizeof(Linkedlist));
+   list->first=NULL;
+   list->last=NULL;
+   return list;
+}
+Node *create_new_node()
+{
+
+    Node *node=(Node*)malloc(sizeof(Node));
+    printf("nhap ten hang: ");
+    fflush(stdin);
+    gets(node->tenhang);
+    printf("nhap don gia: ");
+    scanf("%d",&node->don_gia);
+    printf("nhap so luong: ");
+    scanf("%d",&node->so_luong);
+    node->next=NULL;
+    return node;
+}
+
+void add_node(Linkedlist *list)
+{
+    Node *node;
+    if(list->first==NULL)
+    {
+        list->first=node;
+        list->last=node;
+    }
+    else
+    {
+        list->last->next=node;
+        list->last=node;
+    }
+}
+
+void sort(Linkedlist *list)
+{
+     for(Node *i=list->first;i!=NULL;i=i->next)
+     {
+         for(Node *j=i->next;j!=NULL;j=j->next)
+         {
+             if(strcmp(i->tenhang,j->tenhang)>0)
+             {   char temp[100];
+                 strcpy(temp,j->tenhang);
+                 strcpy(j->tenhang,i->tenhang);
+                 strcpy(i->tenhang,temp);
+                 int temp2=j->don_gia;
+                     j->don_gia=i->don_gia;
+                     i->don_gia=temp2;
+                 int temp3=j->so_luong;
+                 j->so_luong=i->so_luong;
+                 i->so_luong=temp3;
+             }
+         }
+     }
+}
+void printlist(Linkedlist *list)
+{
+   int stt=1;
+   int tong=0;
+   Node *node=list->first;
+   printf("%-20s%-20s%-20s%-20s%-20s\n","STT","TEN HANG","DON GIA","SO LUONG","THANH TIEN");
+   while(node!=NULL)
+   {
+       int thanh_tien=node->don_gia*node->so_luong;
+       printf("%-20d%-20s%-20d%-20d%-20d\n",stt++,node->tenhang,node->don_gia,node->so_luong,thanh_tien);
+       tong+=thanh_tien;
+       node=node->next;
+   }
+    printf("%69s:%19d\n","tong tien",tong);
+}
+void menu()
+{
+
+}
+int main()
+{
+     int n=2;
+     Linkedlist *list=createlist();
+     while(n--)
+     {
+         Node *node=create_new_node();
+         add_node(list);
+     }
+     sort(list);
+     printlist(list);
+    return 0;
+}
